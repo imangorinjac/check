@@ -7,12 +7,15 @@ app = Flask(__name__)
 def fun():
 
     if request.method == "POST":
-
         name = request.form["name"]
+        password = request.form["password"]
         var = "mysupersecret"
-        if name == var:
+        if password == var:
 
             return render_template("drugi.html", ime=name)
         else:
+            message = "sorry wrong password"
+            return render_template("mis.html", poruka=message)
+    else:
 
-            return render_template("mis.html")
+        return render_template("mis.html")
