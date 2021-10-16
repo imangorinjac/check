@@ -1,9 +1,7 @@
 __pycache__/nic.cpython-39.pyc
 venv/.gitignore
-_pycache_-
-flask/venv/include
-.#*
-*.swp
-.DS_Store
-.dir-locals.el
-.dir-locals-2.el
+include/.gitignore
+site/.gitignore
+python3.9/.gitignore
+lib/.gitignore
+scripts/.gitignore
