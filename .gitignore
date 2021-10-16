@@ -1,4 +1,4 @@
 __pycache__/nic.cpython-39.pyc
 venv/.gitignore
 _pycache_-
-.gitignore
+flask/venv/include
