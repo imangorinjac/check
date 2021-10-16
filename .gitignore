@@ -2,3 +2,8 @@ __pycache__/nic.cpython-39.pyc
 venv/.gitignore
 _pycache_-
 flask/venv/include
+.#*
+*.swp
+.DS_Store
+.dir-locals.el
+.dir-locals-2.el
