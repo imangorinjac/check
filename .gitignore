@@ -2,7 +2,7 @@ __pycache__/nic.cpython-39.pyc
 venv/.gitignore
 /venv/.gitignore
 Scripts
-__pycache__
+__pycache__/blah.cpython-39.pyc
 pyvenv.cfg
 .vscode
 registration.db
