@@ -35,7 +35,7 @@ def fun():
         var = "mysupersecret"
         if password == var:
 
-            return render_template("drugi.html", ime=name, users=User.query.all())
+            return render_template("sign_up.html", ime=name, users=User.query.all())
         else:
             message = "sorry wrong password"
             return render_template("mis.html", poruka=message)
@@ -48,21 +48,25 @@ def fun():
 def sign_up():
 
     if request.method == "POST":
+
         if (
             not request.form["username"]
             or not request.form["password"]
-            or not request.form["confirm_password"]
+            or not request.form.get["confirm_password"]
         ):
             return render_template("mis.html")
 
         else:
+
             user = User(
                 request.form["username"],
                 request.form["password"],
-                request.form["confirm_password"],
+                request.files["confirm_password"],
             )
 
         db.session.add(User)
         db.session.commit()
+
         return redirect("mis")
+
     return render_template("sign_up.html", korisnici=User)
