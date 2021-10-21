@@ -13,11 +13,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    confirm_password = db.Column(db.String(120), nullable=False)
 
 
-def __init__(self, username, password):
+def __init__(self, username, password, confirm_password):
     self.username = username
     self.password = password
+    self.confirm_password = confirm_password
 
 
 db.create_all()
@@ -29,6 +31,7 @@ def fun():
     if request.method == "POST":
         name = request.form["name"]
         password = request.form["password"]
+
         var = "mysupersecret"
         if password == var:
 
@@ -46,17 +49,17 @@ def sign_up():
 
     if request.method == "POST":
         if (
-            not request.form["name"]
+            not request.form["username"]
             or not request.form["password"]
-            or not request.form["confirm password"]
+            or not request.form["confirm_password"]
         ):
             return render_template("mis.html")
 
         else:
             user = User(
-                request.form["name"],
+                request.form["username"],
                 request.form["password"],
-                request.form["confirm password"],
+                request.form["confirm_password"],
             )
 
         db.session.add(User)
