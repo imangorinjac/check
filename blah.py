@@ -52,7 +52,7 @@ def sign_up():
         if (
             not request.form["username"]
             or not request.form["password"]
-            or not request.form.get["confirm_password"]
+            or not request.form["confirm_password"]
         ):
             return render_template("mis.html")
 
