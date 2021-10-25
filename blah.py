@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///registration.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+app.config["SECRET_KEY"] = "random string"
 db = SQLAlchemy(app)
 
 
@@ -13,13 +14,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    confirm_password = db.Column(db.String(120), nullable=False)
 
+    def __init__(self, username, password):
 
-def __init__(self, username, password, confirm_password):
-    self.username = username
-    self.password = password
-    self.confirm_password = confirm_password
+        self.username = username
+        self.password = password
 
 
 db.create_all()
@@ -31,14 +30,14 @@ def fun():
     if request.method == "POST":
         name = request.form["name"]
         password = request.form["password"]
+        confirm_password = ""
 
-        var = "mysupersecret"
-        if password == var:
+        if password == confirm_password:
 
-            return render_template("sign_up.html", ime=name, users=User.query.all())
+            return render_template("mis.html", ime=name, users=User.query.all())
         else:
             message = "sorry wrong password"
-            return render_template("mis.html", poruka=message)
+            return render_template("drugi.html", poruka=message, ime=name)
     else:
 
         return render_template("sign_up.html")
@@ -49,24 +48,13 @@ def sign_up():
 
     if request.method == "POST":
 
-        if (
-            not request.form["username"]
-            or not request.form["password"]
-            or not request.form["confirm_password"]
-        ):
-            return render_template("mis.html")
-
+        if not request.form["username"] or not request.form["password"]:
+            print("jfjjej")
         else:
+            users = User(request.form["username"], request.form["password"])
 
-            user = User(
-                request.form["username"],
-                request.form["password"],
-                request.files["confirm_password"],
-            )
-
-        db.session.add(User)
-        db.session.commit()
-
-        return redirect("mis")
-
-    return render_template("sign_up.html", korisnici=User)
+            db.session.add(users)
+            db.session.commit()
+            flash("Record was successfully added")
+            return redirect("new")
+    return render_template("sign_up.html")
