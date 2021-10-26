@@ -25,36 +25,35 @@ db.create_all()
 
 
 @app.route("/", methods=["GET", "POST"])
-def fun():
+def login():
 
     if request.method == "POST":
-        name = request.form["name"]
-        password = request.form["password"]
-        confirm_password = ""
+        password = ""
+        username = ""
+        password = User.query.get(password=password).first()
+        username = User.query.get(username=username).first()
 
-        if password == confirm_password:
-
-            return render_template("mis.html", ime=name, users=User.query.all())
-        else:
-            message = "sorry wrong password"
-            return render_template("drugi.html", poruka=message, ime=name)
-    else:
-
-        return render_template("sign_up.html")
+    return render_template("sign_up.html")
 
 
 @app.route("/new", methods=["GET", "POST"])
 def sign_up():
 
     if request.method == "POST":
+        username = request.form.get("username", None)
+        password = request.form.get("password", None)
+        confirm_password = request.form.get("confirm_password", None)
+        if username is None or password is None or confirm_password is None:
+            print("Some value is None!")
+            return render_template("sign_up.html")
+        if password != confirm_password:
+            print("Password doesn't match confirm password!")
+            return render_template("sign_up.html")
 
-        if not request.form["username"] or not request.form["password"]:
-            print("jfjjej")
-        else:
-            users = User(request.form["username"], request.form["password"])
-
-            db.session.add(users)
-            db.session.commit()
-            flash("Record was successfully added")
-            return redirect("new")
+        user = User(username, password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Record was successfully added")
+        print("Record was successfully added")
+        return render_template("sign_up.html")
     return render_template("sign_up.html")
