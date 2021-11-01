@@ -28,12 +28,15 @@ db.create_all()
 def login():
 
     if request.method == "POST":
-        password = ""
-        username = ""
-        password = User.query.get(password=password).first()
-        username = User.query.get(username=username).first()
-
-    return render_template("sign_up.html")
+        password = request.form.get("password")
+        username = request.form.get("username")
+        current_user = ""
+        current_pass = ""
+        if username != current_user or password != current_pass:
+            password = User.query.get(password)
+            username = User.query.get(username)
+        print("user is already registered")
+    return render_template("mis.html")
 
 
 @app.route("/new", methods=["GET", "POST"])
