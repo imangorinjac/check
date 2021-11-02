@@ -26,16 +26,11 @@ db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def login():
+    password = ""
+    username = ""
+    password = User.query().get(password=password)
+    username = User.query().get(username=username)
 
-    if request.method == "POST":
-        password = request.form.get("password")
-        username = request.form.get("username")
-        current_user = ""
-        current_pass = ""
-        if username != current_user or password != current_pass:
-            password = User.query.get(password)
-            username = User.query.get(username)
-        print("user is already registered")
     return render_template("mis.html")
 
 
