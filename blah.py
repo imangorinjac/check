@@ -26,10 +26,13 @@ db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-    password = ""
-    username = ""
-    password = User.query().get(password=password)
-    username = User.query().get(username=username)
+    password = request.form.get("current_password")
+    username = request.form.get("current_user")
+    current_user = ""
+    current_password = ""
+    user = User.query.filter_by(
+        username=current_user, password=current_password
+    ).first()
 
     return render_template("mis.html")
 
