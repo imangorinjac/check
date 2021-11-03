@@ -33,7 +33,11 @@ def login():
     user = User.query.filter_by(
         username=current_user, password=current_password
     ).first()
-
+    username = request.form.get("username")
+    user = User.query.filter(User.username == username).first()
+    if user != None:
+        print("Please use a different username.")
+        return render_template("mis.html")
     return render_template("mis.html")
 
 
